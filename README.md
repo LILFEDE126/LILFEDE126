@@ -1,16 +1,65 @@
-## Hi there 👋
+# Hi, I'm Federico
 
-<!--
-**LILFEDE126/LILFEDE126** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I'm a Full Stack AI Developer focused on building practical AI systems and web applications.
 
-Here are some ideas to get you started:
+## What I build
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- Retrieval-Augmented Generation (RAG) systems
+- Vector search and document retrieval pipelines
+- FastAPI backends and REST APIs
+- React and Vite web applications
+- PostgreSQL-based applications
+- AI-assisted tools for document processing and search
+
+## Technologies
+
+### Backend
+
+- Python
+- FastAPI
+- Flask
+- REST APIs
+- PostgreSQL
+- SQL
+
+### Frontend
+
+- React
+- Vite
+- JavaScript
+- HTML
+- CSS
+
+### AI and data
+
+- RAG systems
+- Embeddings
+- Vector search
+- Cosine similarity
+- TF-IDF
+- Document processing
+- Local and API-based language models
+
+### Tools
+
+- Git
+- GitHub
+- Docker
+- Linux
+- Postman
+
+## Featured projects
+
+Projects currently being documented and prepared for publication:
+
+- AI/RAG agent
+- CRM web application
+- FastAPI backend and search system
+
+## Current focus
+
+I am building end-to-end projects that combine backend engineering, web applications, databases, and AI retrieval systems.
+
+## Contact
+
+- GitHub: [@LILFEDE126](https://github.com/LILFEDE126)
