@@ -2,18 +2,18 @@
 
 I'm a full-stack AI developer with a background in ICT support and system administration.
 
-I build practical AI systems, backend services, and web applications with a focus on retrieval-augmented generation, vector search, reliable data processing, and clear technical documentation.
+I build practical AI systems, backend services, and web applications with a focus on retrieval-augmented generation, vector search, deterministic validation, and clear technical documentation.
 
 ## What I work on
 
-- Retrieval-augmented generation applications.
-- AI agents for document search and question answering.
-- Vector retrieval and similarity-based ranking.
-- FastAPI backends and REST APIs.
+- Retrieval-augmented generation (RAG) architectures without opaque framework abstractions.
+- Static Python AST code inspection and automated architectural verification.
+- Hybrid retrieval combining dense vector search (HNSW) and lexical full-text search (GIN) via Reciprocal Rank Fusion.
+- FastAPI backends, REST APIs, and Streamlit diagnostic interfaces.
 - React and Vite web applications.
-- PostgreSQL-backed systems.
-- Structured logging, observability, and debugging workflows.
-- Local AI applications using Ollama.
+- PostgreSQL and `pgvector` data layers.
+- Structured logging, concurrency guards, and debugging workflows.
+- Multi-provider AI workflows supporting both local models (Ollama) and cloud APIs (Gemini, Groq, OpenRouter).
 
 ## Problems I focus on solving
 
@@ -23,12 +23,12 @@ I work on pipelines that connect generated responses to retrieved information in
 
 My approach includes:
 
-- controlling the retrieved context;
-- checking whether answers are supported by available data;
-- validating numerical information when numbers matter;
-- using structured output and explicit guardrails;
-- keeping deterministic calculations outside the language model;
-- streaming responses only when incremental output is useful.
+- controlling the retrieved context with explicit similarity and lexical thresholds;
+- stopping generation when local context is insufficient instead of guessing;
+- validating numerical information (amounts, percentages, technical units, and codes) with exact `Decimal` arithmetic;
+- enforcing structured outputs via Pydantic schemas and self-stabilizing retry loops;
+- keeping deterministic calculations and AST checks outside the language model;
+- isolating a single verifiable hypothesis instead of blending multiple retrieved chunks.
 
 The goal is not to make an AI system sound confident. The goal is to make its behavior easier to inspect, test, and correct.
 
@@ -44,7 +44,7 @@ I approach these failures by:
 4. testing one change at a time;
 5. documenting the cause instead of hiding the symptom.
 
-I use structured HTTP logging and explicit status handling to turn opaque API failures into actionable feedback.
+I use structured UTC logging, explicit event codes, and exponential backoff on transient HTTP errors (such as rate limits) to turn opaque API failures into predictable behavior.
 
 ### Connecting technical systems with users
 
@@ -52,66 +52,72 @@ My ICT support and system administration background helps me explain technical p
 
 I focus on making clear how:
 
-- query wording affects retrieval;
-- context limits affect responses;
-- prompt structure influences model behavior;
+- query wording and cross-lingual normalization affect retrieval;
+- context limits and similarity thresholds affect responses;
+- prompt structure and schema constraints influence model behavior;
 - database and API errors differ from application failures;
-- local services must be configured before an AI workflow can run.
+- local services and containers must be configured before an AI workflow can run.
 
 ## Technologies
 
-### Backend
+### Backend & Verification
 
 - Python.
 - FastAPI.
 - Flask.
-- REST APIs.
-- PostgreSQL.
+- Pydantic.
+- Static AST analysis (`ast`, `tokenize`, Radon).
+- Pytest.
+- PostgreSQL & `pgvector`.
 - SQL.
-- HTTP middleware.
 - Structured logging.
 
-### Frontend
+### Frontend & UI
 
 - React.
 - Vite.
 - JavaScript.
-- HTML.
-- CSS.
+- Streamlit.
+- HTML & CSS.
 
 ### AI and data
 
 - Retrieval-augmented generation (RAG).
-- Embeddings.
-- Vector search.
-- Cosine similarity.
-- TF-IDF.
-- Reciprocal Rank Fusion.
-- Document processing.
-- Ollama.
-- Local language models.
+- Hybrid search (HNSW cosine + PostgreSQL Full-Text GIN).
+- Reciprocal Rank Fusion (RRF).
+- Numeric grounding and write-barrier validation (`Decimal`).
+- Cross-lingual query normalization (EN / ES / IT).
+- Ollama (local LLMs and embeddings).
+- Cloud LLM APIs (Google Gemini, Groq, OpenRouter, DeepSeek, OpenAI).
 - Qdrant.
 
 ### Tools and deployment
 
-- Git.
-- GitHub.
-- Docker.
+- Git & GitHub.
+- Docker & Docker Compose.
 - Linux.
 - Postman.
-- Render.
+- Render & Streamlit Community Cloud.
 
 ## Featured projects
 
+### Bottega Leonardesca & THE Engine
+
+A deterministic hybrid RAG engine, static Python AST inspector, and closed-loop diagnostic solver built without LangChain or LlamaIndex. It structures 13 Python modules across 5 strictly acyclic layers (verified via AST unit tests) and combines PostgreSQL/`pgvector` 3-way retrieval (HNSW + Italian/Simple FTS + Reciprocal Rank Fusion), guarded semaphore routing, `Decimal` numeric write-barrier validation, thread-safe concurrency control, and multilingual support (EN/ES/IT) across local Ollama and free cloud APIs.
+
+Includes a suite of 26 pure unit tests running offline in under 0.5s with zero database or network dependencies.
+
+[View repository](https://github.com/LILFEDE126/BOTTEGA-)
+
 ### BankRagDemo
 
-A local RAG prototype for synthetic banking-support knowledge. It combines FastAPI, PostgreSQL with pgvector, 1024-dimensional multilingual E5 embeddings, Italian full-text search, Reciprocal Rank Fusion, and Ollama-based local generation.
+A local RAG prototype for synthetic banking-support knowledge. It combines FastAPI, PostgreSQL with `pgvector`, 1024-dimensional multilingual E5 embeddings, Italian full-text search, Reciprocal Rank Fusion, and Ollama-based local generation.
 
 The project is intentionally presented as a prototype: it does not process real customer data, connect to banking systems, or execute financial operations.
 
 [View repository](https://github.com/LILFEDE126/Bank-RAG-demo)
 
-### Demo Searching Backend
+### Demo Searching Backend (Concert Compass)
 
 FastAPI backend for personalized live-event discovery with JWT authentication, PostgreSQL persistence, external API integration, and hybrid recommendation scoring.
 
@@ -129,7 +135,7 @@ I prefer to understand and document the core logic of the systems I build.
 
 When an AI pipeline produces an unexpected result, I do not treat the model as a black box. I inspect the data flow, retrieval behavior, prompt construction, API responses, logs, database state, and output validation steps.
 
-I use frameworks when they provide value, while keeping important application logic explicit and testable.
+I use frameworks when they provide value, while keeping core application logic explicit, modular, and testable with pure unit tests.
 
 I also distinguish clearly between what is implemented, what has been tested, and what remains a future improvement.
 
@@ -138,14 +144,13 @@ I also distinguish clearly between what is implemented, what has been tested, an
 I am publishing and documenting complete projects that combine:
 
 - backend engineering;
-- databases;
+- relational and vector databases;
 - web applications;
-- vector retrieval;
-- local AI systems;
-- reliable RAG pipelines;
-- technical documentation that another developer can follow.
+- hybrid retrieval and deterministic output validation;
+- local and cloud AI systems;
+- technical documentation that another developer can verify and run.
 
 ## Contact
 
 - GitHub: [@LILFEDE126](https://github.com/LILFEDE126)
-- LinkedIn: [Federico D](https://www.linkedin.com/in/federico-di-ganci-5090aa203)
+- LinkedIn: [Federico Di Ganci](https://www.linkedin.com/in/federico-di-ganci-5090aa203)
